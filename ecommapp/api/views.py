@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 
 class GetVendors(APIView):
-    def get(self,request, *args, **kwargs):
+    def get(self,request):
         qs= Vendor.objects.all()
         serializer= VendorSerialiser(qs, many=True)
         return Response(serializer.data)
