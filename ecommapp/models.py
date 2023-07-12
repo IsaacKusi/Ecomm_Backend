@@ -18,7 +18,7 @@ class Product_Category(models.Model):
         return self.title
 
 class Product(models.Model):
-    category = models.ForeignKey(Product_Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Product_Category, on_delete=models.SET_NULL, null=True, related_name='category_product')
     vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
     product_title = models.CharField(max_length=200)
     product_detail = models.TextField(null=True)
@@ -43,10 +43,11 @@ class Customer(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_time = models.DateTimeField(auto_now_add=True)
+
     
 
 class OrderItems(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE )
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items' )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
