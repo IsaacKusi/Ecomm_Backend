@@ -10,7 +10,7 @@ class VendorSerialiser(ModelSerializer):
     
     def __init__(self, *args, **kwargs):
         super(VendorSerialiser,self).__init__(*args, **kwargs)
-        self.Meta.depth = 1
+        # self.Meta.depth = 1
 
 class ProductCategorySerialiser(ModelSerializer):
     class Meta:
@@ -19,14 +19,14 @@ class ProductCategorySerialiser(ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super(ProductCategorySerialiser,self).__init__(*args, **kwargs)
-        self.Meta.depth = 1
+        # self.Meta.depth = 1
 
 
 class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ('__all__')
 
     def __init__(self, *args, **kwargs):
         super(ProductSerializer,self).__init__(*args, **kwargs)
-        self.Meta.depth = 1
+        # self.Meta.depth = 1
