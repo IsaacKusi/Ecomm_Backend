@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
+# Vendor
 class Vendor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.TextField(null=True)
@@ -9,6 +9,7 @@ class Vendor(models.Model):
     def __str__(self):
        return self.user.username
     
+#product_category
 
 class Product_Category(models.Model):
     title = models.CharField(max_length=200)
@@ -16,6 +17,9 @@ class Product_Category(models.Model):
 
     def __str__(self):
         return self.title
+    
+    
+#product model
 
 class Product(models.Model):
     category = models.ForeignKey(Product_Category, on_delete=models.SET_NULL, null=True, related_name='category_product')
@@ -44,8 +48,11 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_time = models.DateTimeField(auto_now_add=True)
 
-    
+    def __str__(self):
+        return self.customer.user.username
 
+    
+# order Items model
 class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items' )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
