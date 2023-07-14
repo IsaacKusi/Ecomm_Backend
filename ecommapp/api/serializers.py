@@ -1,6 +1,6 @@
 
 from rest_framework.serializers import ModelSerializer
-from ecommapp.models import Vendor, Product_Category, Product, Customer, Order, OrderItems
+from ecommapp.models import Vendor, Product_Category, Product, Customer, Order, OrderItems, CustomerAddress
 
 
 class VendorSerialiser(ModelSerializer):
@@ -38,6 +38,15 @@ class CustomerSerializer(ModelSerializer):
 
     def  __init__(self,*args, **kwargs):
         super(CustomerSerializer, self).__init__(*args, **kwargs)
+        self.Meta.depth = 1
+
+class CustomerAddressSerializer(ModelSerializer):
+    class Meta:
+        model = CustomerAddress
+        fields = ('__all__')
+
+    def  __init__(self,*args, **kwargs):
+        super(CustomerAddressSerializer, self).__init__(*args, **kwargs)
         self.Meta.depth = 1
 
 class OrderSerializer (ModelSerializer):

@@ -1,10 +1,10 @@
 
 from rest_framework.response import Response
-from rest_framework import generics, pagination
+from rest_framework import generics, viewsets
 from .serializers import (VendorSerialiser, ProductCategorySerialiser, 
                           ProductSerializer, CustomerSerializer, OrderItemsSerializer, 
-                          OrderSerializer)
-from ecommapp.models import Vendor, Product_Category, Product, Customer, Order, OrderItems
+                          OrderSerializer, CustomerAddressSerializer)
+from ecommapp.models import Vendor, Product_Category, Product, Customer, Order, OrderItems, CustomerAddress
 from rest_framework.views import APIView
 
 
@@ -45,6 +45,10 @@ class GetCustomer (APIView):
         qs = Customer.objects.all()
         serializer = CustomerSerializer(qs, many = True)
         return Response(serializer.data)
+
+class GetCustomerAddress(viewsets.ModelViewSet):
+     queryset = CustomerAddress.objects.all()
+     serializer_class = CustomerAddressSerializer
     
 class GetCustomerDetail (generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
@@ -73,5 +77,7 @@ class GetOrderItemsDetail (APIView):
        qs = OrderItems.objects.filter(order = order)
        serializer = OrderItemsSerializer(qs, many = True)
        return Response (serializer.data)
+    
+    
 
 

@@ -1,13 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Vendor
+
 class Vendor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.TextField(null=True)
 
     def __str__(self):
        return self.user.username
+    
     
 #product_category
 
@@ -41,6 +44,14 @@ class Customer(models.Model):
     def __str__(self):
        return self.user.username
 
+class CustomerAddress(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name ='customer_address')
+    address = models.TextField()
+    default_address = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.customer.user.username
+
 
 # Order models
 
@@ -51,12 +62,26 @@ class Order(models.Model):
     def __str__(self):
         return self.customer.user.username
 
+
     
 # order Items model
+
 class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items' )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
        return self.product.product_title
+    
 
+# Product Rating 
+
+class ProductRating(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='customer_ratings')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_rating')
+    rating = models.IntegerField()
+    review = models.TextField()
+    date_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.review
