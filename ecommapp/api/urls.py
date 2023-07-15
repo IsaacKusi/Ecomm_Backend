@@ -4,7 +4,8 @@ from rest_framework.routers import DefaultRouter
 from .views import (GetVendors, GetProductCategory, GetProduct, 
                     GetVendorsDetail,GetProductCategoryDetail, GetCustomer, 
                     GetProductDetail, GetCustomerDetail, GetOrder, GetOrderDetail,
-                      GetOrderItems, GetOrderItemsDetail, GetCustomerAddress)
+                      GetOrderItems, GetOrderItemsDetail, GetCustomerAddress, GetProductRating,
+                      GetProductRatingDetail)
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -12,7 +13,8 @@ from rest_framework_simplejwt.views import (
 )
 
 router = DefaultRouter()
-router.register('customer_address', GetCustomerAddress)
+router.register('customer_addresses', GetCustomerAddress)
+router.register('product_ratings', GetProductRating)
 
 urlpatterns = [
     #vendors
@@ -39,9 +41,12 @@ urlpatterns = [
     path('orderItems', GetOrderItems.as_view(), name='orderItem'),
     path('orderItems/details/<int:order_id>', GetOrderItemsDetail.as_view(), name='orderItems_detail'),
 
+    #productRating
+    path('rating/detail/<int:customer_id>', GetProductRatingDetail.as_view(), name='rating_detail'),
+
     #jwt tokens
     path('token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
-urlpatterns = router.urls
+urlpatterns += router.urls

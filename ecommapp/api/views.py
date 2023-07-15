@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework import generics, viewsets
 from .serializers import (VendorSerialiser, ProductCategorySerialiser, 
                           ProductSerializer, CustomerSerializer, OrderItemsSerializer, 
-                          OrderSerializer, CustomerAddressSerializer)
-from ecommapp.models import Vendor, Product_Category, Product, Customer, Order, OrderItems, CustomerAddress
+                          OrderSerializer, CustomerAddressSerializer, ProductRatingSerializer)
+from ecommapp.models import Vendor, Product_Category, Product, Customer, Order, OrderItems, CustomerAddress, ProductRating
 from rest_framework.views import APIView
 
 
@@ -77,6 +77,24 @@ class GetOrderItemsDetail (APIView):
        qs = OrderItems.objects.filter(order = order)
        serializer = OrderItemsSerializer(qs, many = True)
        return Response (serializer.data)
+    
+class GetProductRating(viewsets.ModelViewSet):
+     queryset = ProductRating.objects.all()
+     serializer_class = ProductRatingSerializer
+
+class GetProductRatingDetail(APIView):
+     def get (self, request, customer_id):
+          customer = Customer.objects.get(pk = customer_id)
+          qs = ProductRating.objects.filter(customer = customer)
+          serializer = ProductRatingSerializer(qs, many=True)
+          return Response(serializer.data)
+
+
+
+
+     
+
+
     
     
 
